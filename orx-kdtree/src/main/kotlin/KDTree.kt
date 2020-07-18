@@ -81,7 +81,7 @@ fun <T> insertItem(root: KDTreeNode<T>, item: T, mapper: (T, Int) -> Double): KD
     }
 }
 
-fun <T> buildKDTree(items: MutableList<T>, dimensions: Int, mapper: (T, Int) -> Double): KDTreeNode<T> {
+fun <T> buildKDTree(items: MutableList<T>, dimensions: Int, mapper: (T, Int) -> Double, silent: Boolean = false): KDTreeNode<T> {
     val root = KDTreeNode<T>()
 
     val start = System.currentTimeMillis()
@@ -147,10 +147,9 @@ fun <T> buildKDTree(items: MutableList<T>, dimensions: Int, mapper: (T, Int) -> 
     runBlocking {
         job.join()
     }
-    println("building took ${System.currentTimeMillis()-start}ms")
+    if (!silent) println("building took ${System.currentTimeMillis()-start}ms")
     return root
 }
-
 
 private fun <T> sqrDistance(left: T, right: T, dimensions: Int, mapper: (T, Int) -> Double): Double {
     var distance = 0.0
